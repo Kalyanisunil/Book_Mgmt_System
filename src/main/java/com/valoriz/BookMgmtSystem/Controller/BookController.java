@@ -55,8 +55,21 @@ public class BookController {
         {
             Book book= bookdata.get();
 
-         book.
+         book.setTitle(updatedBook.getTitle());
+            book.setAuthor(updatedBook.getAuthor());
+            book.setPublicationDate(updatedBook.getPublicationDate());
+            book.setIsbn(updatedBook.getIsbn());
+            book.setGenre(updatedBook.getGenre());
+            book.setRating(updatedBook.getRating());
 
+            Book saved = bookrepo.save(book);
+
+            return new ResponseEntity<>(saved, HttpStatus.OK);
+
+        }
+
+        else  {
+            return new ResponseEntity<>("Invalid ID", HttpStatus.NOT_FOUND);
         }
     }
 }
