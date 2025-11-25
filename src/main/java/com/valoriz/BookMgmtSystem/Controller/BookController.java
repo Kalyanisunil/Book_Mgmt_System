@@ -23,7 +23,7 @@ public class BookController {
     public ResponseEntity<List<Book>>getAllBooks(@RequestParam(required = false) String title)
     {
         List<Book> books = bookrepo.findAll();
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(books,HttpStatus.OK);
     }
 
 
@@ -40,6 +40,7 @@ public class BookController {
 
     @PostMapping("/books")
     public ResponseEntity<Book> insertBook(@RequestBody Book book) {
+
         Book savedBook = bookrepo.save(book);
 
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
