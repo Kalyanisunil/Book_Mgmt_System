@@ -34,4 +34,13 @@ public class Book {
     @Max(5)
     private Integer rating;
 
+    public Book(String author, String genre, String id, String isbn, LocalDate publicationDate, Integer rating, String title) {
+        this.author = author;
+        this.genre = genre;
+        this.id = id;
+        this.isbn = isbn;
+        this.publicationDate = publicationDate;
+        this.rating = rating;
+        this.title = title;
+    }
 }
