@@ -10,6 +10,7 @@ public class Book {
 
     @Id
     private String id;
+    private String bookId;
 
     @NotBlank
     @Size(max = 100)
@@ -98,5 +99,13 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 }

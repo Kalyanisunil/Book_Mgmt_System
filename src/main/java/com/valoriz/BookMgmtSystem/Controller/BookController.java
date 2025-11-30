@@ -3,6 +3,7 @@ package com.valoriz.BookMgmtSystem.Controller;
 
 import com.valoriz.BookMgmtSystem.Models.Book;
 import com.valoriz.BookMgmtSystem.Repository.BookRepository;
+import com.valoriz.BookMgmtSystem.Service.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ public class BookController {
 
     @Autowired
     BookRepository bookrepo;
+
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
 
     @GetMapping("/books")
     public ResponseEntity<List<Book>>getAllBooks(@RequestParam(required = false) String title)
@@ -40,7 +44,16 @@ public class BookController {
 
     @PostMapping("/books")
     public ResponseEntity<Book> insertBook(@RequestBody Book book) {
+        //unique id generation happens here
+        try {
+            long seq = sequenceGeneratorService.getSequenceNumber("book_sequence");
 
+            book.setBookId("B-" + String.format("%03d", seq));
+
+        }
+        catch (Exception e) {
+            throw new RuntimeException(" DB Server down");
+        }
         Book savedBook = bookrepo.save(book);
 
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
