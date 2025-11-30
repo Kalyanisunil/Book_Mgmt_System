@@ -86,4 +86,14 @@ public class BookController {
             return new ResponseEntity<>("Invalid ID", HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable String id) {
+        if (!bookrepo.existsById(id)) {
+            return ResponseEntity.status(404).body("Book not found");
+        }
+
+        bookrepo.deleteById(id);
+        return ResponseEntity.ok("Book deleted successfully!");
+    }
 }
