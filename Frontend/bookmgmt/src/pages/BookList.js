@@ -25,19 +25,20 @@ export default function BookList() {
   };
 
   // sorting
-  const sortBooks = (field) => {
-    let order = sortOrder === "asc" ? "desc" : "asc";
-    setSortField(field);
-    setSortOrder(order);
+ const sortBooks = (option) => {
+  if (!option) return;
 
-    const sorted = [...books].sort((a, b) => {
-      if (a[field] < b[field]) return order === "asc" ? -1 : 1;
-      if (a[field] > b[field]) return order === "asc" ? 1 : -1;
-      return 0;
-    });
+  const [field, order] = option.split("-");
 
-    setBooks(sorted);
-  };
+  const sorted = [...books].sort((a, b) => {
+    if (a[field] < b[field]) return order === "asc" ? -1 : 1;
+    if (a[field] > b[field]) return order === "asc" ? 1 : -1;
+    return 0;
+  });
+
+  setBooks(sorted);
+};
+
 
   // pagination 
   const startIndex = (page - 1) * booksPerPage;
@@ -54,27 +55,35 @@ export default function BookList() {
   return (
     <div className="container mt-4">
       <h3>Book List</h3>
+      <div className="mb-3 d-flex gap-2">
+
+  <select
+    className="form-select w-auto"
+    onChange={(e) => sortBooks(e.target.value)}
+  >
+    <option value="">Sort By</option>
+    <option value="title-asc">Title (A → Z)</option>
+    <option value="title-desc">Title (Z → A)</option>
+    <option value="author-asc">Author (A → Z)</option>
+    <option value="author-desc">Author (Z → A)</option>
+    <option value="rating-asc">Rating (Low → High)</option>
+    <option value="rating-desc">Rating (High → Low)</option>
+    <option value="genre-asc">Genre (A → Z)</option>
+    <option value="genre-desc">Genre (Z → A)</option>
+  </select>
+
+</div>
 
       <table className="table table-bordered mt-3">
         <thead>
           <tr>
-            <th onClick={() => sortBooks("title")} style={{ cursor: "pointer" }}>
-              Title {sortField === "title" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
-            </th>
-
-            <th onClick={() => sortBooks("author")} style={{ cursor: "pointer" }}>
-              Author {sortField === "author" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
-            </th>
-
-            <th onClick={() => sortBooks("genre")} style={{ cursor: "pointer" }}>
-              Genre {sortField === "genre" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
-            </th>
-
-            <th onClick={() => sortBooks("rating")} style={{ cursor: "pointer" }}>
-              Rating {sortField === "rating" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
-            </th>
-
-            <th>Actions</th>
+            
+            <th>Book Id</th>
+             <th>Title</th>
+            <th>Author</th>
+             <th>Genre</th>
+            <th>Rating</th>
+            <th>Action</th>
           </tr>
         </thead>
 
@@ -85,6 +94,7 @@ export default function BookList() {
               onClick={() => navigate(`/book/${book.id}`)}
               style={{ cursor: "pointer" }}
             >
+              <td>{book.bookId}</td>
               <td>{book.title}</td>
               <td>{book.author}</td>
               <td>{book.genre}</td>

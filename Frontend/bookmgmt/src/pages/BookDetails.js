@@ -19,7 +19,7 @@ export default function BookDetails() {
 
   return (
     <div className="container mt-4">
-      <h3 className="fw-bold mb-4">📘 Book Details</h3>
+      <h3 className="fw-bold mb-4"> Book Details</h3>
 
       {/* Tabs */}
       <ul className="nav nav-tabs">
