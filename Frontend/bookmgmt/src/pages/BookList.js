@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getBooks, deleteBook } from "../services/bookService";
 
 import { useNavigate } from "react-router-dom";
+import DeleteModal from "../Components/DeleteModal";
 
 export default function BookList() {
   const [books, setBooks] = useState([]);
-  const [sortField, setSortField] = useState("");
-  const [sortOrder, setSortOrder] = useState("asc");
+  
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+   const [deleteId, setDeleteId] = useState(null);
 
   // Pagination
   const [page, setPage] = useState(1);
@@ -47,8 +49,15 @@ export default function BookList() {
 
   const totalPages = Math.ceil(books.length / booksPerPage);
 
-  const handleDelete = async (id) => {
-    await deleteBook(id);
+
+   const openDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const handleDelete = async () => {
+    await deleteBook(deleteId);
+    setShowDeleteModal(false);
     fetchBooks();
   };
 
@@ -103,7 +112,7 @@ export default function BookList() {
               <td onClick={(e) => e.stopPropagation()}>
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(book.id)}
+                  onClick={() => openDeleteModal(book.id)}
                 >
                   Delete
                 </button>
@@ -112,6 +121,14 @@ export default function BookList() {
           ))}
         </tbody>
       </table>
+
+      {/* delete confirmation modal */}
+      
+      <DeleteModal
+        show={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDelete}
+      />
 
      
       <div className="d-flex justify-content-center gap-2">
