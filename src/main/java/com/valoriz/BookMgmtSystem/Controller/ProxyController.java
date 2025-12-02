@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api/proxy")
-@CrossOrigin(origins = "*")
+
 public class ProxyController {
 
     @Autowired
