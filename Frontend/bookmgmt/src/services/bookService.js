@@ -8,4 +8,5 @@ export const addBook = (book) => axios.post("http://localhost:8080/api/books", b
 export const deleteBook = (id) => axios.delete(`${"http://localhost:8080/api/delete"}/${id}`);
 
 export const getGoogleDetails = (isbn) =>
-  axios.get(`${"http://localhost:8080/api/proxy/google"}/proxy/google?isbn=${isbn}`);
+  axios.get(`http://localhost:8080/api/proxy/google?isbn=${isbn}`);
+
