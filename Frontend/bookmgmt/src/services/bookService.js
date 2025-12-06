@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // Change this to your Railway URL
-const BASE_URL = "bookmgmtsystem-production.up.railway.app";
+const BASE_URL = "https://bookmgmtsystem-production.up.railway.app/api";
+
 
 export const getBooks = () => axios.get(`${BASE_URL}/books`);
 
