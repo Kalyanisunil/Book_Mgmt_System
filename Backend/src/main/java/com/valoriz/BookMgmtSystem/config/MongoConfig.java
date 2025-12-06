@@ -33,3 +33,4 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
     // Spring Boot will now use the client and database defined here.
 }
+//test
