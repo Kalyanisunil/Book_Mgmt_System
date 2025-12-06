@@ -29,9 +29,8 @@ public class SecurityConfig {
 
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList(
-                "https://booksmanagementsystem.netlify.app",
-                "https://booksmanagementtsystem.netlify.app",
-                "http://localhost:3000"
+                "https://booksmanagementtsystem.netlify.app"
+
         ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.addAllowedHeader("*");
