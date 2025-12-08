@@ -1,32 +1,27 @@
 # -------- STAGE 1: Build the application --------
-# Use a smaller Maven image for faster build times
-FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 
-# 1. Copy and resolve pom dependencies (for cache layering)
-# This step is correct and improves build speed on subsequent changes.
+# Copy pom.xml and download dependencies first (better caching)
 COPY pom.xml .
-RUN mvn dependency:go-offline
+RUN mvn -q -e -B dependency:go-offline
 
-# 2. Copy the full project and build the JAR
+# Copy the source code
 COPY src ./src
 
-# CRITICAL FIX: Removed the quiet flag (-q) to see the build error
-# If the build fails, the logs will now show the exact compile error.
-RUN mvn -e -B package -DskipTests
+# Build the JAR
+RUN mvn -q -e -B package -DskipTests
 
 
-# -------- STAGE 2: Create final image --------
-# Use a lightweight JRE (Java Runtime Environment) for the final image
-FROM eclipse-temurin:17-jre-alpine
+# -------- STAGE 2: Run the application --------
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # Copy jar from build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Configuration for Render
-EXPOSE 8080
+# Render uses PORT env
 ENV PORT=8080
+EXPOSE 8080
 
-# Start the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
