@@ -20,7 +20,7 @@
 import axios from "axios";
 
 // Use local backend
-const BASE_URL = "http://localhost:8080/api";
+const BASE_URL = "https://bookmanagementsystem-4t9s.onrender.com";
 
 export const getBooks = () => axios.get(`${BASE_URL}/books`);
 
@@ -32,3 +32,4 @@ export const deleteBook = (id) => axios.delete(`${BASE_URL}/delete/${id}`);
 
 export const getGoogleDetails = (isbn) =>
 axios.get(`${BASE_URL}/google?isbn=${isbn}`);
+
