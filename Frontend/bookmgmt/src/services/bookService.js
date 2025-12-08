@@ -20,7 +20,7 @@
 import axios from "axios";
 
 // Use local backend
-const BASE_URL = "https://bookmanagementsystem-4t9s.onrender.com";
+const BASE_URL = "https://bookmanagementsystem-4t9s.onrender.com/api";
 
 export const getBooks = () => axios.get(`${BASE_URL}/books`);
 
