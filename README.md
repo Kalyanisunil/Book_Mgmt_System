@@ -98,7 +98,6 @@ Backend runs at:
 | GET    | /api/books        | Get all books   |
 | GET    | /api/books/{id}   | Get book by ID  |
 | POST   | /api/books        | Add new book    |
-| PUT    | /api/books/{id}   | Update book     |
 | DELETE | /api/books/{id}   | Delete book     |
 
 ---
