@@ -21,10 +21,14 @@ export default function BookList() {
     fetchBooks();
   }, []);
 
-  const fetchBooks = async () => {
-    const res = await getBooks();
-    setBooks(res.data);
-  };
+  const fetchBooks = useCallback(async () => {
+    try {
+      const res = await getBooks();
+      setBooks(res.data);
+    } catch (err) {
+      console.error("Failed to fetch books", err);
+    }
+  }, []);
 
   // sorting
  const sortBooks = (option) => {
