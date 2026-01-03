@@ -16,13 +16,13 @@ public class SequenceGeneratorService {
     private MongoOperations mongoOperations;
 
     public long getSequenceNumber(String sequenceName) {
-        //a mongo query object that finds the document where _id == sequenceName
+        // object finds the document where _id == sequenceName
         Query query = new Query(Criteria.where("_id").is(sequenceName));
 
         //inc - increment
         Update update = new Update().inc("seq", 1);
 
-        //upsert - create or update based f=on existence
+        //create or update based on existence
         FindAndModifyOptions options = new FindAndModifyOptions().returnNew(true).upsert(true);
 
         DatabaseSequence counter = mongoOperations.findAndModify(
